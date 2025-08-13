@@ -1,8 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground, StatusBar, Dimensions, Platform, PixelRatio } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { FontAwesome } from '@expo/vector-icons';
 import { router } from 'expo-router';
+
+// Utility para el tamaño de fuente responsive
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const BASE_WIDTH = 414; // Ancho de pantalla base (ej. iPhone 11)
+const DESKTOP_THRESHOLD = 768; // Umbral para considerar pantalla de escritorio/tablet
+const MAX_SCALE = 1.5; // Limita el escalado para pantallas grandes
+
+const normalize = (size) => {
+  let scale = SCREEN_WIDTH / BASE_WIDTH;
+  // Limita el factor de escala para evitar que los elementos sean demasiado grandes en pantallas de escritorio
+  if (SCREEN_WIDTH > DESKTOP_THRESHOLD) {
+    scale = Math.min(scale, MAX_SCALE);
+  }
+  const newSize = size * scale;
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+};
 
 // --- Configuración para Botones ---
 const socialButtons = [
@@ -45,7 +65,7 @@ const SignInScreen = ({ }) => {
       <View style={styles.authContainer}>
         {socialButtons.map((button) => (
           <TouchableOpacity key={button.name} style={styles.socialButton} onPress={goToHome}>
-            <FontAwesome name={button.icon} size={24} color={button.color} style={styles.socialIcon} />
+            <FontAwesome name={button.icon} size={normalize(24)} color={button.color} style={styles.socialIcon} />
             <Text style={styles.socialButtonText}>Continue with {button.name}</Text>
           </TouchableOpacity>
         ))}
@@ -84,21 +104,21 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: normalize(20),
   },
   logoContainer: {
-    width: 220,
-    height: 220,
+    width: normalize(220),
+    height: normalize(220),
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 50,
+    marginBottom: normalize(50),
   },
   logoImage: {
-    borderRadius: 40,
+    borderRadius: normalize(40),
   },
   logoOverlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    borderRadius: 40,
+    borderRadius: normalize(40),
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -108,16 +128,16 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
+    textShadowOffset: { width: normalize(2), height: normalize(2) },
+    textShadowRadius: normalize(5),
   },
   logoTextOtaku: {
-    fontSize: 42,
+    fontSize: normalize(42),
   },
   logoTextChallenge: {
-    fontSize: 36,
-    letterSpacing: 2,
-    marginTop: -5,
+    fontSize: normalize(36),
+    letterSpacing: normalize(2),
+    marginTop: normalize(-5),
   },
   authContainer: {
     width: '100%',
@@ -127,39 +147,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    borderWidth: 1,
+    borderWidth: normalize(1),
     borderColor: 'rgba(255, 255, 255, 0.4)',
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 20,
+    borderRadius: normalize(12),
+    paddingVertical: normalize(14),
+    paddingHorizontal: normalize(20),
     width: '90%',
-    marginBottom: 15,
+    marginBottom: normalize(15),
   },
   socialIcon: {
-    width: 25,
+    width: normalize(25),
     textAlign: 'center',
-    marginRight: 15,
+    marginRight: normalize(15),
   },
   socialButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: normalize(16),
     fontWeight: '500',
   },
   dividerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '90%',
-    marginVertical: 20,
+    marginVertical: normalize(20),
   },
   dividerLine: {
     flex: 1,
-    height: 1,
+    height: normalize(1),
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
   },
   dividerText: {
     color: 'rgba(255, 255, 255, 0.6)',
-    marginHorizontal: 15,
-    fontSize: 14,
+    marginHorizontal: normalize(15),
+    fontSize: normalize(14),
   },
   bottomButtonsContainer: {
     flexDirection: 'row',
@@ -168,15 +188,15 @@ const styles = StyleSheet.create({
   },
   bottomButton: {
     backgroundColor: '#4A4E69',
-    borderRadius: 12,
-    paddingVertical: 16,
+    borderRadius: normalize(12),
+    paddingVertical: normalize(16),
     width: '48%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   bottomButtonText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: normalize(15),
     fontWeight: 'bold',
     textAlign: 'center',
   },

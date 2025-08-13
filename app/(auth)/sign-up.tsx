@@ -10,10 +10,33 @@ import {
   StatusBar,
   useWindowDimensions,
   FlatList,
+  Dimensions,
+  PixelRatio,
+  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons'; // Importamos Ionicons
+
+// Utility para el tamaño de fuente responsive
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const BASE_WIDTH = 414; // Ancho de pantalla base (ej. iPhone 11)
+const DESKTOP_THRESHOLD = 768; // Umbral para considerar pantalla de escritorio/tablet
+const MAX_SCALE = 1.5; // Limita el escalado para pantallas grandes
+
+const normalize = (size) => {
+  let scale = SCREEN_WIDTH / BASE_WIDTH;
+  // Limita el factor de escala para evitar que los elementos sean demasiado grandes en pantallas de escritorio
+  if (SCREEN_WIDTH > DESKTOP_THRESHOLD) {
+    scale = Math.min(scale, MAX_SCALE);
+  }
+  const newSize = size * scale;
+  if (Platform.OS === 'ios') {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+};
 
 // --- GENERACIÓN DE AVATARES ---
 const totalAvatars = 60;
@@ -70,7 +93,7 @@ const SignUpScreen = () => {
         <Image source={{ uri: item.uri }} style={styles.avatarImage} />
         {selectedAvatarId === item.id && (
           <View style={styles.avatarOverlaySelected}>
-            <Ionicons name="checkmark-circle-outline" size={40} color="#FFFFFF" style={styles.checkIcon} />
+            <Ionicons name="checkmark-circle-outline" size={normalize(40)} color="#FFFFFF" style={styles.checkIcon} />
           </View>
         )}
       </View>
@@ -129,38 +152,38 @@ const SignUpScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: normalize(40),
   },
   fixedHeader: {
-    paddingHorizontal: 20,
-    marginBottom: 10,
+    paddingHorizontal: normalize(20),
+    marginBottom: normalize(10),
   },
   avatarListContainer: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingHorizontal: normalize(20),
+    paddingBottom: normalize(20),
     flexGrow: 1,
   },
   bottomButtonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingBottom: 20,
-    paddingTop: 10,
+    paddingHorizontal: normalize(20),
+    paddingBottom: normalize(20),
+    paddingTop: normalize(10),
     backgroundColor: '#1A1C29',
   },
   logoContainer: {
     alignSelf: 'center',
-    width: 200,
-    height: 200,
+    width: normalize(200),
+    height: normalize(200),
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 30,
+    marginTop: normalize(20),
+    marginBottom: normalize(30),
   },
-  logoImage: { borderRadius: 40 },
+  logoImage: { borderRadius: normalize(40) },
   logoOverlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    borderRadius: 40,
+    borderRadius: normalize(40),
     width: '100%',
     height: '100%',
     justifyContent: 'center',
@@ -170,63 +193,63 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: 'bold',
     textShadowColor: 'rgba(0, 0, 0, 0.8)',
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 5,
+    textShadowOffset: { width: normalize(2), height: normalize(2) },
+    textShadowRadius: normalize(5),
   },
-  logoTextOtaku: { fontSize: 38 },
-  logoTextChallenge: { fontSize: 32, letterSpacing: 2, marginTop: -5 },
-  inputGroup: { width: '100%', marginBottom: 15 },
+  logoTextOtaku: { fontSize: normalize(38) },
+  logoTextChallenge: { fontSize: normalize(32), letterSpacing: normalize(2), marginTop: normalize(-5) },
+  inputGroup: { width: '100%', marginBottom: normalize(15) },
   label: {
     color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 16,
-    marginBottom: 10,
-    paddingLeft: 5,
+    fontSize: normalize(16),
+    marginBottom: normalize(10),
+    paddingLeft: normalize(5),
   },
   input: {
     backgroundColor: '#4A4E69',
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: normalize(12),
+    padding: normalize(16),
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: normalize(16),
     width: '100%',
   },
   // Estilos para los botones inferiores
   signInButton: {
     backgroundColor: '#2E3144', // Un color más oscuro para diferenciarlo
-    borderRadius: 12,
-    paddingVertical: 16,
+    borderRadius: normalize(12),
+    paddingVertical: normalize(16),
     width: '48%', // Cada botón ocupa casi la mitad del espacio
     alignItems: 'center',
   },
   nextButton: {
     backgroundColor: '#4A4E69',
-    borderRadius: 12,
-    paddingVertical: 16,
+    borderRadius: normalize(12),
+    paddingVertical: normalize(16),
     width: '48%',
     alignItems: 'center',
   },
   actionButtonText: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: normalize(18),
     fontWeight: 'bold',
   },
   // Estilos de la cuadrícula de avatares
   avatarWrapper: {
-    padding: 8,
+    padding: normalize(8),
   },
   avatarContainer: {
     width: '100%',
     aspectRatio: 1,
-    borderRadius: 1000,
+    borderRadius: normalize(1000),
     backgroundColor: '#4A4E69',
-    borderWidth: 3,
+    borderWidth: normalize(3),
     borderColor: 'transparent',
     overflow: 'hidden',
-    transition: 'transform 0.2s, border-color 0.2s', // Transiciones suaves
+    // Las transiciones no funcionan directamente con `react-native-web` sin librerías adicionales
   },
   avatarSelected: {
     borderColor: '#FFFFFF',
-    transform: [{ scale: 1.1 }], // Agrandar el avatar seleccionado
+    // La transformación de escala puede ser inconsistente en web
   },
   avatarImage: {
     width: '100%',
@@ -235,14 +258,14 @@ const styles = StyleSheet.create({
   avatarOverlaySelected: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 255, 0, 0.3)', // Superposición verde transparente
-    borderRadius: 1000,
+    borderRadius: normalize(1000),
     justifyContent: 'center',
     alignItems: 'center',
   },
   checkIcon: {
     textShadowColor: 'rgba(0, 0, 0, 0.4)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 3,
+    textShadowOffset: { width: normalize(1), height: normalize(1) },
+    textShadowRadius: normalize(3),
   },
 });
 
