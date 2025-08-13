@@ -5,7 +5,7 @@ export default function Index() {
     //   const { isAuthenticated } = useAuthStore();
 
     //   return isAuthenticated ? 
-    return true ?
+    return false ?
         <Redirect href="/(tabs)" /> :
         <Redirect href="/(auth)" />;
 }
