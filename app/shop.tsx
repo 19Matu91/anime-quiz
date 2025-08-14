@@ -1,15 +1,75 @@
-import { Button, Text, View } from "react-native";
-import { router } from 'expo-router';
+import type React from "react"
+import { ScrollView, View, Text } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
+import { ProfileHeader } from "@/components/home/ProfileHeader"
+import { GetCoinsButton } from "@/components/common/GetCoinsButton"
+import { CoinPackage } from "@/components/shop/CoinPackage"
+import { VipPackage } from "@/components/shop/VipPackage"
+import { shopStyles } from "@/styles/shopStyles"
+import { colors } from "@/theme/colors"
 
-export default function ShopModal() {
-    // Cerrar modal
-    const closeShop = () => {
-        router.back(); // o router.dismiss()
-    };
+const coinPackages = [
+    { id: "1", coins: 100, price: "0.99€" },
+    { id: "2", coins: 300, price: "1.99€" },
+    { id: "3", coins: 500, price: "2.99€" },
+    { id: "4", coins: 1000, price: "4.99€" },
+]
+
+const ShopScreen: React.FC = () => {
+    const handleGetCoinsPress = () => {
+        console.log("Get coins button pressed")
+        // Add logic for free coins (ads, etc.)
+    }
+
+    const handleCoinPackagePress = (packageId: string, coins: number, price: string) => {
+        console.log(`Coin package pressed: ${coins} coins for ${price}`)
+        // Add purchase logic here
+    }
+
+    const handleVipPress = () => {
+        console.log("VIP package pressed")
+        // Add VIP purchase logic here
+    }
+
     return (
-        <View>
-            <Text>ShopModal</Text>
-            <Button title="Close Shop" onPress={closeShop} />
-        </View>
-    );
+        <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={shopStyles.container}>
+            <ScrollView contentContainerStyle={shopStyles.scrollContent}>
+                <View style={shopStyles.section}>
+                    <ProfileHeader
+                        profileImage="https://i.imgur.com/oW1dGDI.jpeg"
+                        username="MatutanoPoderoso"
+                        rank={1}
+                        progress={100}
+                        maxProgress={400}
+                        score={0}
+                    />
+                </View>
+
+                <View style={shopStyles.section}>
+                    <Text style={shopStyles.sectionTitle}>Coin Packages</Text>
+                    <View style={shopStyles.coinPackagesGrid}>
+                        {coinPackages.map((pkg) => (
+                            <CoinPackage
+                                key={pkg.id}
+                                coins={pkg.coins}
+                                price={pkg.price}
+                                onPress={() => handleCoinPackagePress(pkg.id, pkg.coins, pkg.price)}
+                            />
+                        ))}
+                    </View>
+                </View>
+
+                <View style={shopStyles.section}>
+                    <Text style={shopStyles.sectionTitle}>Premium</Text>
+                    <VipPackage price="7.99€" onPress={handleVipPress} />
+                </View>
+
+                <View style={shopStyles.section}>
+                    <GetCoinsButton onPress={handleGetCoinsPress} />
+                </View>
+            </ScrollView>
+        </LinearGradient>
+    )
 }
+
+export default ShopScreen

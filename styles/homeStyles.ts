@@ -275,15 +275,16 @@ export const collectionStyles = StyleSheet.create({
     padding: normalize(15),
     flexDirection: "row",
     alignItems: "center",
+    gap: normalize(8),
   },
   difficultyButton: {
     flex: 1,
-    marginHorizontal: normalize(2.5),
     height: normalize(40),
     backgroundColor: colors.surface.tertiary,
     borderRadius: normalize(10),
     paddingHorizontal: normalize(15),
-    justifyContent: "center"
+    justifyContent: "center",
+    alignItems: "center",
   },
   easyButton: {
     backgroundColor: colors.accent.success,
@@ -305,7 +306,6 @@ export const collectionStyles = StyleSheet.create({
   },
   impossibleButton: {
     flex: 1,
-    marginHorizontal: normalize(2.5),
     height: normalize(40),
     backgroundColor: colors.accent.danger,
     borderRadius: normalize(10),
@@ -313,7 +313,7 @@ export const collectionStyles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    position: "relative", // Added for overlay positioning
+    position: "relative",
   },
   impossibleButtonOverlay: {
     ...StyleSheet.absoluteFillObject,

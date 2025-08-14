@@ -27,7 +27,7 @@ export default function RootLayout() {
           name="shop"
           options={{
             presentation: 'modal',
-            headerShown: true,
+            headerShown: false,
             title: 'Shop'
           }}
         />
