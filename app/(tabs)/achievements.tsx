@@ -28,6 +28,12 @@ const AchievementScreen: React.FC = () => {
     { id: "7", name: "Ohayo gozaimasu", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
     { id: "8", name: "BAKA!", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
     { id: "9", name: "Space cowboy", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "14", name: "Weeaboo", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "15", name: "State Alchemist", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "16", name: "Over 9000!", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "17", name: "Ohayo gozaimasu", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "18", name: "BAKA!", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
+    { id: "19", name: "Space cowboy", avatar: "https://i.imgur.com/oW1dGDI.jpeg", isUnlocked: false },
   ]
 
   const completedCount = achievements.filter((a) => a.isUnlocked).length
