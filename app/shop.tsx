@@ -64,7 +64,7 @@ const ShopScreen: React.FC = () => {
                     <VipPackage price="7.99€" onPress={handleVipPress} />
                 </View>
 
-                <View style={shopStyles.section}>
+                <View style={shopStyles.sectionFinal}>
                     <GetCoinsButton onPress={handleGetCoinsPress} />
                 </View>
             </ScrollView>

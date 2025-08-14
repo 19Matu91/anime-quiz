@@ -8,12 +8,15 @@ export const shopStyles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingVertical: spacing.lg,
-    paddingBottom: normalize(100),
+    paddingVertical: spacing.lg
   },
   section: {
     paddingHorizontal: spacing.lg,
     marginBottom: spacing.lg,
+  },
+  sectionFinal:{
+    paddingHorizontal: spacing.lg,
+
   },
   sectionTitle: {
     fontSize: normalize(20),
