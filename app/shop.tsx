@@ -7,6 +7,8 @@ import { CoinPackage } from "@/components/shop/CoinPackage"
 import { VipPackage } from "@/components/shop/VipPackage"
 import { shopStyles } from "@/styles/shopStyles"
 import { colors } from "@/theme/colors"
+import { CloseButton } from "@/components/common/CloseButton"
+import { router } from "expo-router"
 
 const coinPackages = [
     { id: "1", coins: 100, price: "0.99€" },
@@ -31,6 +33,12 @@ const ShopScreen: React.FC = () => {
         // Add VIP purchase logic here
     }
 
+    const handleClosePress = () => {
+        console.log("Close button pressed")
+        router.back();
+        // Add navigation logic to go back or close shop
+    }
+
     return (
         <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={shopStyles.container}>
             <ScrollView contentContainerStyle={shopStyles.scrollContent}>
@@ -44,6 +52,8 @@ const ShopScreen: React.FC = () => {
                         score={0}
                     />
                 </View>
+
+                <CloseButton onPress={handleClosePress} />
 
                 <View style={shopStyles.section}>
                     <Text style={shopStyles.sectionTitle}>Coin Packages</Text>
@@ -64,7 +74,7 @@ const ShopScreen: React.FC = () => {
                     <VipPackage price="7.99€" onPress={handleVipPress} />
                 </View>
 
-                <View style={shopStyles.sectionFinal}>
+                <View style={shopStyles.section}>
                     <GetCoinsButton onPress={handleGetCoinsPress} />
                 </View>
             </ScrollView>
