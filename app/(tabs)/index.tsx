@@ -12,6 +12,7 @@ import { CollectionItem } from "@/components/home/CollectionItem"
 import { homeStyles } from "@/styles/homeStyles"
 import { colors } from "@/theme/colors"
 import { View, Text, ScrollView as HorizontalScrollView } from "react-native"
+import { router } from "expo-router"
 
 const dailyRewards = [
   { id: "1", title: "View Ad", gain: 10, image: "https://i.imgur.com/Kz8jD2a.png", completed: false },
@@ -108,6 +109,7 @@ const HomeScreen: React.FC = () => {
   }
 
   const handleDifficultySelect = (itemId: string, difficulty: "easy" | "hard" | "impossible") => {
+    router.push("/quiz")
     console.log(`Selected ${difficulty} for item ${itemId}`)
     // Add navigation or quiz logic here
   }
