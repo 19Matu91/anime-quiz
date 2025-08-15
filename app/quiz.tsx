@@ -23,14 +23,14 @@ interface QuizQuestion {
 const sampleQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "Whose sharingan is this?",
-    image: "/red-sharingan-eye.png",
+    question: "Whose sharingan is this? (pregunta con imagen)",
+    image: "https://i.imgur.com/oW1dGDI.jpeg",
     answers: ["Itachi Uchiha", "Orochimaru", "Kakashi Hatake", "Tsunade"],
     correctAnswer: 0,
   },
   {
     id: 2,
-    question: "Whose sharingan is this?",
+    question: "Whose sharingan is this? (pregunta sin imagen)",
     answers: ["Itachi Uchiha", "Orochimaru", "Kakashi Hatake", "Tsunade"],
     correctAnswer: 0,
   },
