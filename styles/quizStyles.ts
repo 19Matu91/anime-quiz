@@ -30,8 +30,9 @@ export const quizStyles = StyleSheet.create({
 
   // Header styles
   headerSection: {
-    flex: responsiveFlex(0.15, 0.22),
+    flex: responsiveFlex(0.12, 0.15),
     justifyContent: "center",
+    minHeight: normalize(60),
   },
   headerContainer: {
     flexDirection: "row",
@@ -40,20 +41,20 @@ export const quizStyles = StyleSheet.create({
     backgroundColor: colors.surface.secondary,
     borderRadius: normalize(15),
     paddingHorizontal: normalize(20),
-    paddingVertical: normalize(12),
+    paddingVertical: normalize(10),
   },
   progressText: {
     color: colors.text.primary,
-    fontSize: normalize(16),
+    fontSize: normalize(14),
     fontWeight: "600",
   },
   timerContainer: {
     alignItems: "center",
   },
   timerCircle: {
-    width: normalize(50),
-    height: normalize(50),
-    borderRadius: normalize(25),
+    width: normalize(45),
+    height: normalize(45),
+    borderRadius: normalize(22.5),
     backgroundColor: colors.primary,
     borderWidth: normalize(3),
     borderColor: colors.accent.gold,
@@ -62,7 +63,7 @@ export const quizStyles = StyleSheet.create({
   },
   timerText: {
     color: colors.text.primary,
-    fontSize: normalize(14),
+    fontSize: normalize(12),
     fontWeight: "bold",
   },
   livesContainer: {
@@ -71,96 +72,97 @@ export const quizStyles = StyleSheet.create({
   },
   livesText: {
     color: colors.text.primary,
-    fontSize: normalize(16),
+    fontSize: normalize(14),
     fontWeight: "600",
     marginRight: normalize(4),
   },
   heartIcon: {
-    fontSize: normalize(16),
+    fontSize: normalize(14),
   },
 
   // Question styles
   questionSection: {
-    flex: responsiveFlex(0.45, 0.28),
+    flex: responsiveFlex(0.35, 0.3),
     justifyContent: "center",
     alignItems: "center",
+    minHeight: normalize(200),
   },
   questionContainer: {
     alignItems: "center",
-    paddingHorizontal: normalize(20),
+    paddingHorizontal: normalize(15),
     width: "100%",
   },
   questionText: {
     color: colors.text.primary,
-    fontSize: normalize(24),
+    fontSize: responsiveSize(20, 22, 24),
     fontWeight: "600",
     textAlign: "center",
-    marginBottom: normalize(20),
-    lineHeight: normalize(30),
+    marginBottom: normalize(15),
+    lineHeight: responsiveSize(26, 28, 30),
   },
   imageContainer: {
-    marginTop: normalize(10),
+    marginTop: normalize(8),
   },
   questionImage: {
-    width: normalize(200),
-    height: normalize(120),
+    width: responsiveSize(180, 200, 220),
+    height: responsiveSize(110, 120, 130),
     borderRadius: normalize(10),
     resizeMode: "cover",
   },
 
   // Answer styles
   answersSection: {
-    flex: responsiveFlex(0.25, 0.3),
-    // justifyContent: "flex-end",
+    flex: responsiveFlex(0.4, 0.35),
+    justifyContent: "center",
+    minHeight: normalize(200),
   },
   answersGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    paddingHorizontal: normalize(10),
-    paddingVertical: normalize(30),
+    paddingHorizontal: normalize(5),
+    gap: normalize(8),
   },
   answerButton: {
     width: "48%",
-    height: "25%",
-    aspectRatio: isDesktop ? 1.8 : 1.1,
-    borderRadius: normalize(15),
+    minHeight: normalize(60),
+    maxHeight: normalize(80),
+    borderRadius: normalize(12),
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: normalize(10),
+    paddingVertical: normalize(8),
+    paddingHorizontal: normalize(4),
     elevation: 2,
     shadowColor: colors.overlay,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
-    // shadowColor: colors.overlay,
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.25,
-    // shadowRadius: 4,
   },
   defaultAnswerButton: {
     backgroundColor: colors.surface.secondary,
   },
   answerText: {
     color: colors.text.primary,
-    fontSize: normalize(16),
+    fontSize: responsiveSize(14, 15, 16),
     fontWeight: "600",
     textAlign: "center",
-    paddingHorizontal: normalize(8),
+    paddingHorizontal: normalize(6),
+    numberOfLines: 2,
   },
 
   // Bottom section styles
   bottomSection: {
-    flex: responsiveFlex(0.1, 0.12),
+    flex: responsiveFlex(0.08, 0.1),
     justifyContent: "center",
     alignItems: "center",
+    minHeight: normalize(40),
   },
   abandonButton: {
-    paddingVertical: normalize(8),
+    paddingVertical: normalize(6),
   },
   abandonText: {
     color: colors.text.secondary,
-    fontSize: normalize(16),
+    fontSize: normalize(14),
     textDecorationLine: "underline",
   },
 

@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { View, Text, TouchableOpacity, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
@@ -50,20 +50,37 @@ export const QuizScreen: React.FC = () => {
     "default",
     "default",
   ])
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const nextQuestionTimerRef = useRef<NodeJS.Timeout | null>(null)
   const insets = useSafeAreaInsets()
 
   const currentQuestion = sampleQuestions[currentQuestionIndex]
 
   useEffect(() => {
     if (timeRemaining > 0 && !showResults) {
-      const timer = setTimeout(() => {
+      timerRef.current = setTimeout(() => {
         setTimeRemaining(timeRemaining - 1)
       }, 1000)
-      return () => clearTimeout(timer)
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current)
+        }
+      }
     } else if (timeRemaining === 0 && !showResults) {
       handleTimeout()
     }
   }, [timeRemaining, showResults])
+
+  const clearAllTimeouts = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current)
+      timerRef.current = null
+    }
+    if (nextQuestionTimerRef.current) {
+      clearTimeout(nextQuestionTimerRef.current)
+      nextQuestionTimerRef.current = null
+    }
+  }
 
   const handleTimeout = () => {
     setLives(lives - 1)
@@ -72,7 +89,7 @@ export const QuizScreen: React.FC = () => {
     newStates[currentQuestion.correctAnswer] = "correct"
     setAnswerStates(newStates)
 
-    setTimeout(() => {
+    nextQuestionTimerRef.current = setTimeout(() => {
       nextQuestion()
     }, 2000)
   }
@@ -95,7 +112,7 @@ export const QuizScreen: React.FC = () => {
 
     setAnswerStates(newStates)
 
-    setTimeout(() => {
+    nextQuestionTimerRef.current = setTimeout(() => {
       nextQuestion()
     }, 2000)
   }
@@ -118,8 +135,8 @@ export const QuizScreen: React.FC = () => {
   }
 
   const confirmAbandonQuiz = () => {
+    clearAllTimeouts()
     setShowAbandonAlert(false)
-    // Add navigation logic here to exit quiz
     router.push("/(tabs)")
   }
 
@@ -129,7 +146,7 @@ export const QuizScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={quizStyles.container}>
-      <View style={[quizStyles.content, { paddingTop: insets.top }]}>
+      <View style={[quizStyles.content, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
         {/* Quiz Header */}
         <View style={quizStyles.headerSection}>
           <QuizHeader
