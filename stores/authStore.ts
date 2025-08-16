@@ -1,6 +1,4 @@
 import { create } from "zustand"
-import { persist } from "zustand/middleware"
-
 export interface UserSettings {
   language: string
   notifications: boolean
@@ -88,122 +86,120 @@ const defaultUser: User = {
 }
 
 export const useAuthStore = create<AuthState>()(
-  persist(
-    (set, get) => ({
-      // Initial state
-      isAuthenticated: true, // Default to authenticated for demo
-      user: defaultUser,
+  (set, get) => ({
+    // Initial state
+    isAuthenticated: true, // Default to authenticated for demo
+    user: defaultUser,
 
-      // Authentication actions
-      login: (user: User) => {
-        set({ isAuthenticated: true, user })
-      },
+    // Authentication actions
+    login: (user: User) => {
+      set({ isAuthenticated: true, user })
+    },
 
-      logout: () => {
-        set({ isAuthenticated: false, user: null })
-      },
+    logout: () => {
+      set({ isAuthenticated: false, user: null })
+    },
 
-      // User data updates
-      updateUsername: (username: string) => {
-        const { user } = get()
-        if (user) {
-          set({ user: { ...user, username } })
-        }
-      },
+    // User data updates
+    updateUsername: (username: string) => {
+      const { user } = get()
+      if (user) {
+        set({ user: { ...user, username } })
+      }
+    },
 
-      updateAvatar: (avatar: string) => {
-        const { user } = get()
-        if (user) {
-          set({ user: { ...user, avatar } })
-        }
-      },
+    updateAvatar: (avatar: string) => {
+      const { user } = get()
+      if (user) {
+        set({ user: { ...user, avatar } })
+      }
+    },
 
-      updateSettings: (newSettings: Partial<UserSettings>) => {
-        const { user } = get()
-        if (user) {
-          set({
-            user: {
-              ...user,
-              settings: { ...user.settings, ...newSettings },
-            },
-          })
-        }
-      },
+    updateSettings: (newSettings: Partial<UserSettings>) => {
+      const { user } = get()
+      if (user) {
+        set({
+          user: {
+            ...user,
+            settings: { ...user.settings, ...newSettings },
+          },
+        })
+      }
+    },
 
-      updateStats: (newStats: Partial<UserStats>) => {
-        const { user } = get()
-        if (user) {
-          set({
-            user: {
-              ...user,
-              stats: { ...user.stats, ...newStats },
-            },
-          })
-        }
-      },
+    updateStats: (newStats: Partial<UserStats>) => {
+      const { user } = get()
+      if (user) {
+        set({
+          user: {
+            ...user,
+            stats: { ...user.stats, ...newStats },
+          },
+        })
+      }
+    },
 
-      updateProgress: (newProgress: Partial<UserProgress>) => {
-        const { user } = get()
-        if (user) {
-          set({
-            user: {
-              ...user,
-              progress: { ...user.progress, ...newProgress },
-            },
-          })
-        }
-      },
+    updateProgress: (newProgress: Partial<UserProgress>) => {
+      const { user } = get()
+      if (user) {
+        set({
+          user: {
+            ...user,
+            progress: { ...user.progress, ...newProgress },
+          },
+        })
+      }
+    },
 
-      // Individual setting actions
-      setLanguage: (language: string) => {
-        const { updateSettings } = get()
-        updateSettings({ language })
-      },
+    // Individual setting actions
+    setLanguage: (language: string) => {
+      const { updateSettings } = get()
+      updateSettings({ language })
+    },
 
-      setNotifications: (notifications: boolean) => {
-        const { updateSettings } = get()
-        updateSettings({ notifications })
-      },
+    setNotifications: (notifications: boolean) => {
+      const { updateSettings } = get()
+      updateSettings({ notifications })
+    },
 
-      setBgmVolume: (bgmVolume: number) => {
-        const { updateSettings } = get()
-        updateSettings({ bgmVolume })
-      },
+    setBgmVolume: (bgmVolume: number) => {
+      const { updateSettings } = get()
+      updateSettings({ bgmVolume })
+    },
 
-      setSfxVolume: (sfxVolume: number) => {
-        const { updateSettings } = get()
-        updateSettings({ sfxVolume })
-      },
+    setSfxVolume: (sfxVolume: number) => {
+      const { updateSettings } = get()
+      updateSettings({ sfxVolume })
+    },
 
-      setVoiceVolume: (voiceVolume: number) => {
-        const { updateSettings } = get()
-        updateSettings({ voiceVolume })
-      },
+    setVoiceVolume: (voiceVolume: number) => {
+      const { updateSettings } = get()
+      updateSettings({ voiceVolume })
+    },
 
-      setSocialConnection: (platform: keyof UserSettings["socialConnections"], connected: boolean) => {
-        const { user } = get()
-        if (user) {
-          set({
-            user: {
-              ...user,
-              settings: {
-                ...user.settings,
-                socialConnections: {
-                  ...user.settings.socialConnections,
-                  [platform]: connected,
-                },
+    setSocialConnection: (platform: keyof UserSettings["socialConnections"], connected: boolean) => {
+      const { user } = get()
+      if (user) {
+        set({
+          user: {
+            ...user,
+            settings: {
+              ...user.settings,
+              socialConnections: {
+                ...user.settings.socialConnections,
+                [platform]: connected,
               },
             },
-          })
-        }
-      },
-    }),
-    {
-      name: "auth-storage", // Storage key
-      partialize: (state) => ({
-        isAuthenticated: state.isAuthenticated,
-        user: state.user,
-      }),
+          },
+        })
+      }
     },
-  ),
+  }),
+  {
+    name: "auth-storage", // Storage key
+    partialize: (state) => ({
+      isAuthenticated: state.isAuthenticated,
+      user: state.user,
+    }),
+  },
 )
