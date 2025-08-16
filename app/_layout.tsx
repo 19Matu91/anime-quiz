@@ -6,6 +6,7 @@ import { Stack, usePathname, Redirect } from "expo-router"
 import { StatusBar } from "expo-status-bar"
 import { useEffect, useState } from "react"
 import "react-native-reanimated"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 import { useAuthStore } from "../stores/authStore"
 
 export default function RootLayout() {
@@ -27,13 +28,11 @@ export default function RootLayout() {
     return null
   }
 
-  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth" || pathname === "/sign-up"
+  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth"
   const isProtectedRoute = !isAuthRoute && pathname !== "/"
 
   // Redirect unauthenticated users trying to access protected routes
-  if (!isAuthenticated && isProtectedRoute && !isAuthRoute) {
-    console.log("Redirecting to /auth")
-    console.log(pathname)
+  if (!isAuthenticated && isProtectedRoute) {
     return <Redirect href="/(auth)" />
   }
 
@@ -43,31 +42,27 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={DarkTheme}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {isAuthenticated ? (
-          <>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            {/* Modal Configuration */}
-            <Stack.Screen
-              name="shop"
-              options={{
-                presentation: "modal",
-                headerShown: false,
-                title: "Shop",
-              }}
-            />
-          </>
-        ) : (
+    <SafeAreaProvider>
+      <ThemeProvider value={DarkTheme}>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        )}
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+          <Stack.Screen
+            name="shop"
+            options={{
+              presentation: "modal",
+              headerShown: false,
+              title: "Shop",
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </SafeAreaProvider>
   )
 }

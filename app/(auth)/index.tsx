@@ -1,6 +1,7 @@
 import type React from "react"
 import { View, StatusBar } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { router } from "expo-router"
 import { OtakuChallengeLogo } from "@/components/common/OtakuChallengeLogo"
 import { SocialButton } from "@/components/common/SocialButton"
@@ -14,6 +15,7 @@ const socialProviders: Array<"google" | "facebook" | "apple"> = ["google", "face
 
 const SignInScreen: React.FC = () => {
   const { login } = useAuthStore()
+  const insets = useSafeAreaInsets()
 
   const handleSignUpPress = () => {
     router.push("/(auth)/sign-up")
@@ -22,7 +24,7 @@ const SignInScreen: React.FC = () => {
   const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
     const userData = {
       id: `${provider}_${Date.now()}`,
-      username: `User_${provider}`,
+      username: "MatutanoPoderoso",
       avatar: "https://i.imgur.com/oW1dGDI.jpeg",
       stats: {
         global: 50000,
@@ -55,7 +57,6 @@ const SignInScreen: React.FC = () => {
   const handleGuestLogin = () => {
     const guestData = {
       id: `guest_${Date.now()}`,
-      isGuest: true,
       username: "Guest User",
       avatar: "https://i.imgur.com/oW1dGDI.jpeg",
       stats: {
@@ -90,7 +91,7 @@ const SignInScreen: React.FC = () => {
     <LinearGradient colors={[colors.primary, colors.primaryDark]} style={signInStyles.container}>
       <StatusBar barStyle="light-content" />
 
-      <View style={signInStyles.logoContainer}>
+      <View style={[signInStyles.logoContainer, { paddingTop: insets.top }]}>
         <OtakuChallengeLogo size="large" />
       </View>
 

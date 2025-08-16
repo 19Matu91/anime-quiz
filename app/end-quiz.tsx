@@ -1,8 +1,7 @@
-
-
 import type React from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { QuizResultsHeader } from "@/components/quiz/QuizResultsHeader"
 import { ProgressSection } from "@/components/quiz/ProgressSection"
 import { quizStyles } from "@/styles/quizStyles"
@@ -30,6 +29,7 @@ const EndQuizScreen: React.FC<EndQuizScreenProps> = ({
 }) => {
   const isWin = correctAnswers >= totalQuestions * 0.7 // 70% to win
   const timeBonus = Math.floor(timeRemaining / 5) // 1 bonus per 5 seconds
+  const insets = useSafeAreaInsets()
 
   const onTryAgain = () => {
     router.push("/quiz")
@@ -43,7 +43,7 @@ const EndQuizScreen: React.FC<EndQuizScreenProps> = ({
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={quizStyles.container}>
-      <View style={quizStyles.endQuizContent}>
+      <View style={[quizStyles.endQuizContent, { paddingTop: insets.top }]}>
         {/* Results Header */}
         <View style={quizStyles.resultsHeaderSection}>
           <QuizResultsHeader

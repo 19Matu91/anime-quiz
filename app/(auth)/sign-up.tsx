@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { View, StatusBar, FlatList, useWindowDimensions, TouchableOpacity, Text } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { router } from "expo-router"
 import { OtakuChallengeLogo } from "@/components/common/OtakuChallengeLogo"
 import { Input } from "@/components/common/Input"
@@ -25,6 +26,7 @@ const SignUpScreen: React.FC = () => {
   const [selectedAvatarId, setSelectedAvatarId] = useState(avatars[1].id)
 
   const { login } = useAuthStore()
+  const insets = useSafeAreaInsets()
 
   const { width } = useWindowDimensions()
   const isDesktop = width > 768
@@ -82,7 +84,7 @@ const SignUpScreen: React.FC = () => {
     <LinearGradient colors={[colors.primary, colors.primaryDark]} style={signUpStyles.container}>
       <StatusBar barStyle="light-content" />
 
-      <View style={signUpStyles.fixedHeader}>
+      <View style={[signUpStyles.fixedHeader, { paddingTop: insets.top }]}>
         <View style={signUpStyles.logoContainer}>
           <OtakuChallengeLogo size="medium" />
         </View>

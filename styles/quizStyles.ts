@@ -133,6 +133,10 @@ export const quizStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
+    // shadowColor: colors.overlay,
+    // shadowOffset: { width: 0, height: 2 },
+    // shadowOpacity: 0.25,
+    // shadowRadius: 4,
   },
   defaultAnswerButton: {
     backgroundColor: colors.surface.secondary,

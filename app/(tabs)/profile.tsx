@@ -4,6 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { View, Text, TouchableOpacity, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ProfileHeader } from "@/components/home/ProfileHeader"
 import { SettingsToggle } from "@/components/profile/SettingsToggle"
 import { SettingsSlider } from "@/components/profile/SettingsSlider"
@@ -16,6 +17,7 @@ import { colors } from "@/theme/colors"
 import { useAuthStore } from "@/stores/authStore"
 
 export const ProfileScreen: React.FC = () => {
+  const insets = useSafeAreaInsets()
   const { user, logout, deleteAccount, updateUserSettings } = useAuthStore()
 
   const [selectedLanguage, setSelectedLanguage] = useState(user?.settings?.language || "en")
@@ -64,7 +66,7 @@ export const ProfileScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={profileStyles.container}>
-      <ScrollView style={profileStyles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView style={[profileStyles.content, { paddingTop: insets.top }]} showsVerticalScrollIndicator={false}>
         {/* Header Section */}
         <View style={profileStyles.headerSection}>
           <ProfileHeader showEditables={true} />

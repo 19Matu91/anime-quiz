@@ -20,14 +20,12 @@ export const BottomAlert: React.FC<BottomAlertProps> = ({ visible, onClose, chil
     if (visible) {
       Animated.spring(slideAnim, {
         toValue: 1,
-        useNativeDriver: true,
         tension: 100,
         friction: 8,
       }).start()
     } else {
       Animated.spring(slideAnim, {
         toValue: 0,
-        useNativeDriver: true,
         tension: 100,
         friction: 8,
       }).start()

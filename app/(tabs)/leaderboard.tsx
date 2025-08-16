@@ -3,6 +3,7 @@
 import type React from "react"
 import { useState } from "react"
 import { View, ScrollView } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ProfileHeader } from "@/components/home/ProfileHeader"
 import { TabSelector } from "@/components/leaderboard/TabSelector"
 import { PodiumPlayer } from "@/components/leaderboard/PodiumPlayer"
@@ -12,6 +13,7 @@ import { colors } from "@/theme/colors"
 import { LinearGradient } from "expo-linear-gradient"
 
 const LeaderboardScreen: React.FC = () => {
+  const insets = useSafeAreaInsets()
   const [activeTab, setActiveTab] = useState<"all" | "weekly" | "daily">("all")
 
   // Mock data
@@ -57,7 +59,7 @@ const LeaderboardScreen: React.FC = () => {
       colors={[colors.background.secondary, colors.background.primary]}
       style={leaderboardStyles.container}
     >
-      <View style={leaderboardStyles.content}>
+      <View style={[leaderboardStyles.content, { paddingTop: insets.top }]}>
         {/* Header Section */}
         <View style={leaderboardStyles.headerSection}>
           <ProfileHeader {...currentUser} />

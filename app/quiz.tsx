@@ -1,9 +1,10 @@
-
+"use client"
 
 import type React from "react"
 import { useState, useEffect } from "react"
 import { View, Text, TouchableOpacity, Image } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { BottomAlert } from "@/components/common/BottomAlert"
 import { QuizHeader } from "@/components/quiz/QuizHeader"
 import { QuestionDisplay } from "@/components/quiz/QuestionDisplay"
@@ -49,6 +50,7 @@ export const QuizScreen: React.FC = () => {
     "default",
     "default",
   ])
+  const insets = useSafeAreaInsets()
 
   const currentQuestion = sampleQuestions[currentQuestionIndex]
 
@@ -127,7 +129,7 @@ export const QuizScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={quizStyles.container}>
-      <View style={quizStyles.content}>
+      <View style={[quizStyles.content, { paddingTop: insets.top }]}>
         {/* Quiz Header */}
         <View style={quizStyles.headerSection}>
           <QuizHeader
@@ -187,4 +189,4 @@ export const QuizScreen: React.FC = () => {
   )
 }
 
-export default QuizScreen;
+export default QuizScreen

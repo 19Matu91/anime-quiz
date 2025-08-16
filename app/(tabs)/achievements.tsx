@@ -1,6 +1,7 @@
 import type React from "react"
 import { View, ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ProfileHeader } from "@/components/home/ProfileHeader"
 import { AchievementHeader } from "@/components/achievements/AchievementHeader"
 import { AchievementBadge } from "@/components/achievements/AchievementBadge"
@@ -8,7 +9,8 @@ import { achievementStyles } from "@/styles/achievementStyles"
 import { colors } from "@/theme/colors"
 
 const AchievementScreen: React.FC = () => {
-  // Mock data
+  const insets = useSafeAreaInsets()
+
   const currentUser = {
     profileImage: "https://i.imgur.com/oW1dGDI.jpeg",
     username: "MatutanoPoderoso",
@@ -47,7 +49,7 @@ const AchievementScreen: React.FC = () => {
       colors={[colors.background.secondary, colors.background.primary]}
       style={achievementStyles.container}
     >
-      <View style={achievementStyles.content}>
+      <View style={[achievementStyles.content, { paddingTop: insets.top }]}>
         {/* Header Section */}
         <View style={achievementStyles.headerSection}>
           <ProfileHeader {...currentUser} />

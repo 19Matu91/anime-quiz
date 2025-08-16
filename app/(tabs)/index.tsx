@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect } from "react"
 import { ScrollView } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { ProfileHeader } from "@/components/home/ProfileHeader"
 import { LeaderboardStats } from "@/components/home/LeaderboardStats"
 import { RewardItem } from "@/components/home/RewardItem"
@@ -92,6 +93,7 @@ const HomeScreen: React.FC = () => {
   const [expandedItemId, setExpandedItemId] = useState<string | null>(null)
   const [searchText, setSearchText] = useState("")
   const [filteredItems, setFilteredItems] = useState(initialCollectionItems)
+  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     if (searchText === "") {
@@ -121,7 +123,10 @@ const HomeScreen: React.FC = () => {
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={homeStyles.container}>
-      <ScrollView contentContainerStyle={homeStyles.scrollContent}>
+      <ScrollView
+        contentContainerStyle={[homeStyles.scrollContent, { paddingBottom: insets.bottom }]}
+        style={{ paddingTop: insets.top }}
+      >
         <View style={homeStyles.section}>
           <ProfileHeader
             profileImage="https://i.imgur.com/oW1dGDI.jpeg"

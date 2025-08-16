@@ -45,16 +45,15 @@ export const LeaderboardStats: React.FC = () => {
         <View style={leaderboardStyles.header}>
           <View
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              borderRadius: normalize(10),
-              padding: normalize(2),
+              backgroundColor: "rgba(255, 255, 255, 0.7)",
+              width: normalize(30),
+              height: normalize(30),
+              borderRadius: normalize(12),
               justifyContent: "center",
-              alignItems: "center",
-              minWidth: normalize(20),
-              minHeight: normalize(20),
+              alignItems: "center"
             }}
           >
-            <Text style={{ fontSize: normalize(16) }}>{userLanguage.flag}</Text>
+            <Text style={{ fontSize: normalize(20), fontWeight: "bold", marginTop: normalize(-2)}}>{userLanguage.flag}</Text>
           </View>
           <Text style={leaderboardStyles.text}>LOCAL</Text>
         </View>

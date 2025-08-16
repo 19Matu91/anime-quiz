@@ -4,7 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { View, Text, Image, TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
-import { router } from "expo-router"
+import { router, usePathname } from "expo-router"
 import { normalize } from "../../utils/responsive"
 import { profileHeaderStyles } from "../../styles/homeStyles"
 import { EditableUsername } from "../profile/EditableUsername"
@@ -66,6 +66,9 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ showEditables = fa
     setIsEditingUsername(false)
   }
 
+  const pathname = usePathname()
+  const isOnShopPage = pathname === "/shop"
+
   return (
     <>
       <View style={profileHeaderStyles.container}>
@@ -118,15 +121,15 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ showEditables = fa
           </View>
         </View>
 
-        <View style={profileHeaderStyles.scoreContainer}>
+        <TouchableOpacity onPress={() => router.push("/shop")} disabled={isOnShopPage} style={profileHeaderStyles.scoreContainer}>
           <View style={profileHeaderStyles.scoreIcons}>
             <Ionicons name="cash-outline" size={normalize(24)} color="#FFD700" />
             <Text style={profileHeaderStyles.scoreText}>{formatNumber(score)}</Text>
           </View>
-          <TouchableOpacity onPress={() => router.push("/shop")}>
+          {!isOnShopPage && (
             <Ionicons name="add-circle-outline" size={normalize(24)} color="#FFFFFF" />
-          </TouchableOpacity>
-        </View>
+          )}
+        </TouchableOpacity>
       </View>
 
       {showEditables && (
