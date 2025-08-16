@@ -1,4 +1,4 @@
-
+"use client"
 
 import type React from "react"
 import { useState } from "react"
@@ -10,6 +10,7 @@ import { Input } from "@/components/common/Input"
 import { AvatarSelector } from "@/components/avatar/AvatarSelector"
 import { colors } from "@/theme/colors"
 import { signUpStyles } from "@/styles/signUpStyles"
+import { useAuthStore } from "@/stores/authStore"
 
 // Generate avatars
 const totalAvatars = 60
@@ -23,6 +24,8 @@ const SignUpScreen: React.FC = () => {
   const [username, setUsername] = useState("MatutanoPoderoso")
   const [selectedAvatarId, setSelectedAvatarId] = useState(avatars[1].id)
 
+  const { login } = useAuthStore()
+
   const { width } = useWindowDimensions()
   const isDesktop = width > 768
   const numColumns = isDesktop ? 10 : 3
@@ -31,7 +34,40 @@ const SignUpScreen: React.FC = () => {
     router.push("/(auth)")
   }
 
-  const goToHome = () => router.push("/(tabs)")
+  const handleSignUp = () => {
+    const selectedAvatar = avatars.find((avatar) => avatar.id === selectedAvatarId)
+
+    const newUser = {
+      id: `user_${Date.now()}`,
+      username: username.trim() || "MatutanoPoderoso",
+      avatar: selectedAvatar?.uri || avatars[0].uri,
+      stats: {
+        global: 0,
+        local: 0,
+        score: 0,
+      },
+      progress: {
+        rank: 0,
+        progress: 0,
+        maxProgress: 100,
+      },
+      settings: {
+        language: "en",
+        notifications: true,
+        bgmVolume: 60,
+        sfxVolume: 70,
+        voiceVolume: 50,
+        socialConnections: {
+          google: false,
+          facebook: false,
+          apple: false,
+        },
+      },
+    }
+
+    login(newUser)
+    router.push("/(tabs)")
+  }
 
   const renderAvatar = ({ item }: { item: (typeof avatars)[0] }) => (
     <AvatarSelector
@@ -74,7 +110,7 @@ const SignUpScreen: React.FC = () => {
           <Text style={signUpStyles.actionButtonText}>Sign In</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={signUpStyles.nextButton} onPress={goToHome}>
+        <TouchableOpacity style={signUpStyles.nextButton} onPress={handleSignUp}>
           <Text style={signUpStyles.actionButtonText}>Next</Text>
         </TouchableOpacity>
       </View>
@@ -82,4 +118,4 @@ const SignUpScreen: React.FC = () => {
   )
 }
 
-export default SignUpScreen;
+export default SignUpScreen

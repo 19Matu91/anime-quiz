@@ -1,4 +1,9 @@
 import { create } from "zustand"
+// import { createJSONStorage } from 'zustand/middleware'
+import { persist, createJSONStorage } from 'expo-zustand-persist';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 export interface UserSettings {
   language: string
   notifications: boolean
@@ -86,120 +91,125 @@ const defaultUser: User = {
 }
 
 export const useAuthStore = create<AuthState>()(
-  (set, get) => ({
-    // Initial state
-    isAuthenticated: true, // Default to authenticated for demo
-    user: defaultUser,
+  persist(
 
-    // Authentication actions
-    login: (user: User) => {
-      set({ isAuthenticated: true, user })
-    },
+    (set, get) => ({
+      // Initial state
+      isAuthenticated: false, // Default to authenticated for demo
+      user: null,
 
-    logout: () => {
-      set({ isAuthenticated: false, user: null })
-    },
+      // Authentication actions
+      login: (user: User) => {
+        set({ isAuthenticated: true, user })
+      },
 
-    // User data updates
-    updateUsername: (username: string) => {
-      const { user } = get()
-      if (user) {
-        set({ user: { ...user, username } })
-      }
-    },
+      logout: () => {
+        console.log("logout")
+        set({ isAuthenticated: false, user: null })
+      },
 
-    updateAvatar: (avatar: string) => {
-      const { user } = get()
-      if (user) {
-        set({ user: { ...user, avatar } })
-      }
-    },
+      // User data updates
+      updateUsername: (username: string) => {
+        const { user } = get()
+        if (user) {
+          set({ user: { ...user, username } })
+        }
+      },
 
-    updateSettings: (newSettings: Partial<UserSettings>) => {
-      const { user } = get()
-      if (user) {
-        set({
-          user: {
-            ...user,
-            settings: { ...user.settings, ...newSettings },
-          },
-        })
-      }
-    },
+      updateAvatar: (avatar: string) => {
+        const { user } = get()
+        if (user) {
+          set({ user: { ...user, avatar } })
+        }
+      },
 
-    updateStats: (newStats: Partial<UserStats>) => {
-      const { user } = get()
-      if (user) {
-        set({
-          user: {
-            ...user,
-            stats: { ...user.stats, ...newStats },
-          },
-        })
-      }
-    },
+      updateSettings: (newSettings: Partial<UserSettings>) => {
+        const { user } = get()
+        if (user) {
+          set({
+            user: {
+              ...user,
+              settings: { ...user.settings, ...newSettings },
+            },
+          })
+        }
+      },
 
-    updateProgress: (newProgress: Partial<UserProgress>) => {
-      const { user } = get()
-      if (user) {
-        set({
-          user: {
-            ...user,
-            progress: { ...user.progress, ...newProgress },
-          },
-        })
-      }
-    },
+      updateStats: (newStats: Partial<UserStats>) => {
+        const { user } = get()
+        if (user) {
+          set({
+            user: {
+              ...user,
+              stats: { ...user.stats, ...newStats },
+            },
+          })
+        }
+      },
 
-    // Individual setting actions
-    setLanguage: (language: string) => {
-      const { updateSettings } = get()
-      updateSettings({ language })
-    },
+      updateProgress: (newProgress: Partial<UserProgress>) => {
+        const { user } = get()
+        if (user) {
+          set({
+            user: {
+              ...user,
+              progress: { ...user.progress, ...newProgress },
+            },
+          })
+        }
+      },
 
-    setNotifications: (notifications: boolean) => {
-      const { updateSettings } = get()
-      updateSettings({ notifications })
-    },
+      // Individual setting actions
+      setLanguage: (language: string) => {
+        const { updateSettings } = get()
+        updateSettings({ language })
+      },
 
-    setBgmVolume: (bgmVolume: number) => {
-      const { updateSettings } = get()
-      updateSettings({ bgmVolume })
-    },
+      setNotifications: (notifications: boolean) => {
+        const { updateSettings } = get()
+        updateSettings({ notifications })
+      },
 
-    setSfxVolume: (sfxVolume: number) => {
-      const { updateSettings } = get()
-      updateSettings({ sfxVolume })
-    },
+      setBgmVolume: (bgmVolume: number) => {
+        const { updateSettings } = get()
+        updateSettings({ bgmVolume })
+      },
 
-    setVoiceVolume: (voiceVolume: number) => {
-      const { updateSettings } = get()
-      updateSettings({ voiceVolume })
-    },
+      setSfxVolume: (sfxVolume: number) => {
+        const { updateSettings } = get()
+        updateSettings({ sfxVolume })
+      },
 
-    setSocialConnection: (platform: keyof UserSettings["socialConnections"], connected: boolean) => {
-      const { user } = get()
-      if (user) {
-        set({
-          user: {
-            ...user,
-            settings: {
-              ...user.settings,
-              socialConnections: {
-                ...user.settings.socialConnections,
-                [platform]: connected,
+      setVoiceVolume: (voiceVolume: number) => {
+        const { updateSettings } = get()
+        updateSettings({ voiceVolume })
+      },
+
+      setSocialConnection: (platform: keyof UserSettings["socialConnections"], connected: boolean) => {
+        const { user } = get()
+        if (user) {
+          set({
+            user: {
+              ...user,
+              settings: {
+                ...user.settings,
+                socialConnections: {
+                  ...user.settings.socialConnections,
+                  [platform]: connected,
+                },
               },
             },
-          },
-        })
-      }
-    },
-  }),
-  {
-    name: "auth-storage", // Storage key
-    partialize: (state) => ({
-      isAuthenticated: state.isAuthenticated,
-      user: state.user,
+          })
+        }
+      },
     }),
-  },
+    {
+      name: "auth-storage", // Storage key
+      storage: createJSONStorage(() => AsyncStorage), // Storage provider
+      partialize: (state) => ({
+        isAuthenticated: state.isAuthenticated,
+        user: state.user,
+      }),
+    },
+  ),
 )

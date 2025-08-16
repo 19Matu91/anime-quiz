@@ -7,11 +7,12 @@ import { LinearGradient } from "expo-linear-gradient"
 import { ProfileHeader } from "@/components/home/ProfileHeader"
 import { SettingsToggle } from "@/components/profile/SettingsToggle"
 import { SettingsSlider } from "@/components/profile/SettingsSlider"
-import {  SocialConnectButton } from "@/components/profile/SocialConnectButton"
+import { SocialConnectButton } from "@/components/profile/SocialConnectButton"
 import { LanguageSelector } from "@/components/profile/LanguageSelector"
 import { ConfirmationAlert } from "@/components/profile/ConfirmationAlert"
 import { profileStyles } from "@/styles/profileStyles"
 import { colors } from "@/theme/colors"
+import { useAuthStore } from "@/stores/authStore"
 
 // import { ProfileHeader } from "../components/home/ProfileHeader"
 // import { SettingsToggle } from "../components/profile/SettingsToggle"
@@ -33,17 +34,21 @@ export const ProfileScreen: React.FC = () => {
   const [showSignOutAlert, setShowSignOutAlert] = useState(false)
   const [showDeleteAlert, setShowDeleteAlert] = useState(false)
 
+  const { logout } = useAuthStore()
+
   const handleUsernameChange = (newUsername: string) => {
     setUsername(newUsername)
   }
 
   const handleSignOut = () => {
+    logout()
     setShowSignOutAlert(false)
     // Add sign out logic here
     console.log("[v0] User signed out")
   }
 
   const handleDeleteAccount = () => {
+    logout()
     setShowDeleteAlert(false)
     // Add delete account logic here
     console.log("[v0] Account deleted")
@@ -105,9 +110,9 @@ export const ProfileScreen: React.FC = () => {
 
             {/* Account Linking */}
             <Text style={profileStyles.linkAccountTitle}>Link your account:</Text>
-            <SocialConnectButton platform="google" isConnected={isGoogleConnected} onPress={() => {}} />
-            <SocialConnectButton platform="facebook" onPress={() => {}} />
-            <SocialConnectButton platform="apple" onPress={() => {}} />
+            <SocialConnectButton platform="google" isConnected={isGoogleConnected} onPress={() => { }} />
+            <SocialConnectButton platform="facebook" onPress={() => { }} />
+            <SocialConnectButton platform="apple" onPress={() => { }} />
 
             {/* Sign Out Button */}
             <TouchableOpacity style={profileStyles.signOutButton} onPress={() => setShowSignOutAlert(true)}>
