@@ -7,6 +7,8 @@ import { StatusBar } from "expo-status-bar"
 import { useEffect, useState } from "react"
 import "react-native-reanimated"
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import { Platform } from "react-native"
+import * as NavigationBar from "expo-navigation-bar"
 import { useAuthStore } from "../stores/authStore"
 
 export default function RootLayout() {
@@ -24,19 +26,23 @@ export default function RootLayout() {
     }
   }, [loaded])
 
-  if (!loaded || !isReady) {
-    return null
-  }
+  useEffect(() => {
+    if (Platform.OS === "android") {
+      NavigationBar.setVisibilityAsync("hidden")
+    }
+  }, [])
 
   const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth"
   const isProtectedRoute = !isAuthRoute && pathname !== "/"
 
-  // Redirect unauthenticated users trying to access protected routes
+  if (!loaded || !isReady) {
+    return null
+  }
+
   if (!isAuthenticated && isProtectedRoute) {
     return <Redirect href="/(auth)" />
   }
 
-  // Redirect authenticated users trying to access auth routes
   if (isAuthenticated && isAuthRoute) {
     return <Redirect href="/(tabs)" />
   }
