@@ -1,4 +1,4 @@
-"use client"
+
 
 import type React from "react"
 import { useState } from "react"
@@ -121,7 +121,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ showEditables = fa
           </View>
         </View>
 
-        <TouchableOpacity onPress={() => router.push("/shop")} disabled={isOnShopPage} style={profileHeaderStyles.scoreContainer}>
+        <TouchableOpacity onPress={() => router.push("/shop")} disabled={isOnShopPage}s style={profileHeaderStyles.scoreContainer}>
           <View style={profileHeaderStyles.scoreIcons}>
             <Ionicons name="cash-outline" size={normalize(24)} color="#FFD700" />
             <Text style={profileHeaderStyles.scoreText}>{formatNumber(score)}</Text>

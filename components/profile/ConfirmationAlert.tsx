@@ -1,4 +1,4 @@
-"use client"
+
 
 import type React from "react"
 import { View, Text, TouchableOpacity, Image } from "react-native"

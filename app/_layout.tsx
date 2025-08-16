@@ -1,4 +1,4 @@
-"use client"
+
 
 import { DarkTheme, ThemeProvider } from "@react-navigation/native"
 import { useFonts } from "expo-font"

@@ -1,4 +1,4 @@
-"use client"
+
 
 import type React from "react"
 import { Modal, TouchableOpacity, Animated, useWindowDimensions } from "react-native"
