@@ -36,7 +36,7 @@ export const LeaderboardStats: React.FC = () => {
           <Ionicons name="earth" size={normalize(20)} color="#00E676" />
           <Text style={leaderboardStyles.text}>GLOBAL</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{formatNumber(user?.globalRank || 0)}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.stats?.global || 0)}</Text>
       </View>
 
       <View style={leaderboardStyles.separator} />
@@ -58,7 +58,7 @@ export const LeaderboardStats: React.FC = () => {
           </View>
           <Text style={leaderboardStyles.text}>LOCAL</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{formatNumber(user?.localRank || 0)}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.stats?.local || 0)}</Text>
       </View>
 
       <View style={leaderboardStyles.separator} />
@@ -68,7 +68,7 @@ export const LeaderboardStats: React.FC = () => {
           <Ionicons name="star" size={normalize(20)} color="#3498db" />
           <Text style={leaderboardStyles.text}>SCORE</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{formatNumber(user?.score || 0)}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.stats?.score || 0)}</Text>
       </View>
     </View>
   )

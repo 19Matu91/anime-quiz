@@ -22,7 +22,7 @@ const SignInScreen: React.FC = () => {
   const handleSocialLogin = (provider: "google" | "facebook" | "apple") => {
     const userData = {
       id: `${provider}_${Date.now()}`,
-      username: "MatutanoPoderoso",
+      username: `User_${provider}`,
       avatar: "https://i.imgur.com/oW1dGDI.jpeg",
       stats: {
         global: 50000,
