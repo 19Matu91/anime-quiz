@@ -1,6 +1,21 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Dimensions } from "react-native"
 import { colors } from "../theme/colors"
 import { normalize } from "../utils/responsive"
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window")
+const isDesktop = screenWidth > 768
+const isTablet = screenWidth > 480 && screenWidth <= 768
+
+const responsiveSize = (mobile: number, tablet?: number, desktop?: number) => {
+  if (isDesktop && desktop) return normalize(desktop)
+  if (isTablet && tablet) return normalize(tablet)
+  return normalize(mobile)
+}
+
+const responsiveFlex = (mobile: number, desktop?: number) => {
+  if (isDesktop && desktop) return desktop
+  return mobile
+}
 
 export const quizStyles = StyleSheet.create({
   container: {
@@ -9,11 +24,13 @@ export const quizStyles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: normalize(20),
+    maxWidth: isDesktop ? 1200 : "100%",
+    alignSelf: "center",
   },
 
   // Header styles
   headerSection: {
-    flex: 0.15,
+    flex: responsiveFlex(0.15, 0.22),
     justifyContent: "center",
   },
   headerContainer: {
@@ -64,13 +81,14 @@ export const quizStyles = StyleSheet.create({
 
   // Question styles
   questionSection: {
-    flex: 0.45,
+    flex: responsiveFlex(0.45, 0.28),
     justifyContent: "center",
     alignItems: "center",
   },
   questionContainer: {
     alignItems: "center",
     paddingHorizontal: normalize(20),
+    width: "100%",
   },
   questionText: {
     color: colors.text.primary,
@@ -92,18 +110,20 @@ export const quizStyles = StyleSheet.create({
 
   // Answer styles
   answersSection: {
-    flex: 0.3,
-    justifyContent: "center",
+    flex: responsiveFlex(0.25, 0.3),
+    // justifyContent: "flex-end",
   },
   answersGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
     paddingHorizontal: normalize(10),
+    paddingVertical: normalize(30),
   },
   answerButton: {
     width: "48%",
-    aspectRatio: 1.2,
+    height: "25%",
+    aspectRatio: isDesktop ? 1.8 : 1.1,
     borderRadius: normalize(15),
     alignItems: "center",
     justifyContent: "center",
@@ -127,7 +147,7 @@ export const quizStyles = StyleSheet.create({
 
   // Bottom section styles
   bottomSection: {
-    flex: 0.1,
+    flex: responsiveFlex(0.1, 0.12),
     justifyContent: "center",
     alignItems: "center",
   },
@@ -138,56 +158,6 @@ export const quizStyles = StyleSheet.create({
     color: colors.text.secondary,
     fontSize: normalize(16),
     textDecorationLine: "underline",
-  },
-
-  // End Quiz Screen styles
-  endQuizContent: {
-    flex: 1,
-    paddingHorizontal: normalize(20),
-    paddingVertical: normalize(20),
-  },
-  resultsHeaderSection: {
-    flex: 0.4,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  resultsHeaderContainer: {
-    alignItems: "center",
-    width: "100%",
-  },
-  quizTitleText: {
-    color: colors.text.secondary,
-    fontSize: normalize(18),
-    fontWeight: "500",
-    marginBottom: normalize(20),
-  },
-  quizEndedText: {
-    color: colors.text.primary,
-    fontSize: normalize(32),
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: normalize(15),
-  },
-  resultStatusText: {
-    fontSize: normalize(28),
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: normalize(20),
-  },
-  winText: {
-    color: colors.accent.success,
-  },
-  loseText: {
-    color: colors.accent.danger,
-  },
-  statsContainer: {
-    alignItems: "center",
-  },
-  statsText: {
-    color: colors.text.primary,
-    fontSize: normalize(18),
-    fontWeight: "500",
-    marginBottom: normalize(5),
   },
 
   // Progress Section styles
@@ -276,7 +246,7 @@ export const quizStyles = StyleSheet.create({
 
   // Exit Section styles
   exitSection: {
-    flex: 0.15,
+    flex: responsiveFlex(0.15, 0.15),
     justifyContent: "center",
     alignItems: "center",
   },
@@ -284,6 +254,58 @@ export const quizStyles = StyleSheet.create({
     color: colors.text.secondary,
     fontSize: normalize(16),
     textDecorationLine: "underline",
+  },
+
+  // End Quiz Screen styles
+  endQuizContent: {
+    flex: 1,
+    paddingHorizontal: normalize(20),
+    paddingVertical: normalize(20),
+    maxWidth: isDesktop ? 1200 : "100%",
+    alignSelf: "center",
+  },
+  resultsHeaderSection: {
+    flex: 0.4,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  resultsHeaderContainer: {
+    alignItems: "center",
+    width: "100%",
+  },
+  quizTitleText: {
+    color: colors.text.secondary,
+    fontSize: normalize(18),
+    fontWeight: "500",
+    marginBottom: normalize(20),
+  },
+  quizEndedText: {
+    color: colors.text.primary,
+    fontSize: normalize(32),
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: normalize(15),
+  },
+  resultStatusText: {
+    fontSize: normalize(28),
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: normalize(20),
+  },
+  winText: {
+    color: colors.accent.success,
+  },
+  loseText: {
+    color: colors.accent.danger,
+  },
+  statsContainer: {
+    alignItems: "center",
+  },
+  statsText: {
+    color: colors.text.primary,
+    fontSize: normalize(18),
+    fontWeight: "500",
+    marginBottom: normalize(5),
   },
 
   // Abandon Quiz Alert styles

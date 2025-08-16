@@ -9,11 +9,6 @@ import { quizStyles } from "@/styles/quizStyles"
 import { colors } from "@/theme/colors"
 import { router } from "expo-router"
 
-// import { QuizResultsHeader } from "../components/quiz/QuizResultsHeader"
-// import { ProgressSection } from "../components/quiz/ProgressSection"
-// import { quizStyles } from "../styles/quizStyles"
-// import { colors } from "../theme/colors"
-
 interface EndQuizScreenProps {
   quizTitle?: string
   difficulty?: string
@@ -36,20 +31,15 @@ const EndQuizScreen: React.FC<EndQuizScreenProps> = ({
   const isWin = correctAnswers >= totalQuestions * 0.7 // 70% to win
   const timeBonus = Math.floor(timeRemaining / 5) // 1 bonus per 5 seconds
 
-
   const onTryAgain = () => {
-    // Add logic to restart the quiz
     router.push("/quiz")
   }
   const onGetLife = () => {
-    // Add logic to get a life
     router.push("/shop")
   }
   const onExitQuiz = () => {
-    // Add logic to exit the quiz
     router.push("/(tabs)")
   }
-
 
   return (
     <LinearGradient colors={[colors.background.secondary, colors.background.primary]} style={quizStyles.container}>
@@ -98,4 +88,5 @@ const EndQuizScreen: React.FC<EndQuizScreenProps> = ({
   )
 }
 
-export default EndQuizScreen;
+export { EndQuizScreen }
+export default EndQuizScreen

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { normalize } from "../utils/responsive"
+import { normalize, responsiveSize } from "../utils/responsive"
 import { colors } from "../theme/colors"
 import { spacing } from "../theme/spacing"
 
@@ -12,7 +12,7 @@ export const homeStyles = StyleSheet.create({
     paddingBottom: normalize(100),
   },
   section: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: responsiveSize(16, 24, 32, 48),
     marginBottom: spacing.lg,
   },
   sectionHeader: {
@@ -22,7 +22,7 @@ export const homeStyles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   sectionTitle: {
-    fontSize: normalize(20),
+    fontSize: responsiveSize(20, 22, 24, 26),
     fontWeight: "bold",
     color: colors.text.primary,
   },
@@ -33,15 +33,15 @@ export const profileHeaderStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.surface.secondary,
-    borderRadius: normalize(20),
-    padding: spacing.sm,
+    borderRadius: responsiveSize(20, 22, 24, 26),
+    padding: responsiveSize(12, 14, 16, 18),
     marginBottom: spacing.sm,
     justifyContent: "space-between",
   },
   avatar: {
-    width: normalize(60),
-    height: normalize(60),
-    borderRadius: normalize(30),
+    width: responsiveSize(60, 70, 80, 90),
+    height: responsiveSize(60, 70, 80, 90),
+    borderRadius: responsiveSize(30, 35, 40, 45),
     borderWidth: normalize(2),
     borderColor: colors.accent.gold,
     marginRight: spacing.sm,
@@ -52,7 +52,7 @@ export const profileHeaderStyles = StyleSheet.create({
     justifyContent: "center",
   },
   name: {
-    fontSize: normalize(18),
+    fontSize: responsiveSize(18, 20, 22, 24),
     fontFamily: "sans-serif-light",
     color: colors.text.primary,
     marginBottom: normalize(5),
@@ -64,15 +64,15 @@ export const profileHeaderStyles = StyleSheet.create({
   rankBadge: {
     marginRight: spacing.sm,
     position: "relative",
-    width: normalize(40),
-    height: normalize(40),
+    width: responsiveSize(40, 45, 50, 55),
+    height: responsiveSize(40, 45, 50, 55),
     justifyContent: "center",
     alignItems: "center",
   },
   rankNumber: {
     position: "absolute",
     color: colors.text.primary,
-    fontSize: normalize(18),
+    fontSize: responsiveSize(18, 20, 22, 24),
     fontWeight: "bold",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowOffset: { width: -1, height: 1 },
@@ -83,36 +83,36 @@ export const profileHeaderStyles = StyleSheet.create({
     borderRadius: normalize(10),
   },
   progressBar: {
-    height: normalize(10),
+    height: responsiveSize(10, 12, 14, 16),
     backgroundColor: colors.background.primary,
-    borderRadius: normalize(5),
+    borderRadius: responsiveSize(5, 6, 7, 8),
     flex: 1,
     marginRight: spacing.sm,
   },
   progressBarFill: {
     height: "100%",
     backgroundColor: colors.accent.success,
-    borderRadius: normalize(5),
+    borderRadius: responsiveSize(5, 6, 7, 8),
   },
   progressText: {
     color: colors.text.primary,
-    fontSize: normalize(12),
+    fontSize: responsiveSize(12, 13, 14, 15),
   },
   scoreContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginLeft: spacing.sm,
     backgroundColor: colors.background.primary,
-    borderRadius: normalize(20),
-    paddingVertical: normalize(5),
-    paddingHorizontal: spacing.sm,
+    borderRadius: responsiveSize(20, 22, 24, 26),
+    paddingVertical: responsiveSize(5, 6, 7, 8),
+    paddingHorizontal: responsiveSize(12, 14, 16, 18),
   },
   scoreIcons: {
     flexDirection: "row",
     alignItems: "center",
   },
   scoreText: {
-    fontSize: normalize(18),
+    fontSize: responsiveSize(18, 20, 22, 24),
     color: colors.text.primary,
     marginLeft: normalize(5),
     marginRight: normalize(5),
@@ -246,20 +246,20 @@ export const collectionStyles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: normalize(150),
+    height: responsiveSize(150, 180, 200, 220),
     resizeMode: "cover",
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-end",
-    padding: normalize(15),
+    padding: responsiveSize(15, 18, 20, 22),
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
   },
   title: {
     color: colors.text.primary,
-    fontSize: normalize(24),
+    fontSize: responsiveSize(24, 26, 28, 30),
     fontWeight: "bold",
   },
   scoreContainer: {
@@ -268,18 +268,18 @@ export const collectionStyles = StyleSheet.create({
   },
   scoreText: {
     color: colors.text.primary,
-    fontSize: normalize(20),
+    fontSize: responsiveSize(20, 22, 24, 26),
     marginRight: normalize(5),
   },
   expandedContent: {
-    padding: normalize(15),
+    padding: responsiveSize(15, 18, 20, 22),
     flexDirection: "row",
     alignItems: "center",
-    gap: normalize(8),
+    gap: responsiveSize(8, 10, 12, 14),
   },
   difficultyButton: {
     flex: 1,
-    height: normalize(40),
+    height: responsiveSize(40, 45, 50, 55),
     backgroundColor: colors.surface.tertiary,
     borderRadius: normalize(10),
     paddingHorizontal: normalize(15),
@@ -292,21 +292,21 @@ export const collectionStyles = StyleSheet.create({
   easyButtonText: {
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: normalize(14),
+    fontSize: responsiveSize(14, 15, 16, 17),
     textAlign: "left",
   },
   hardButton: {
-    backgroundColor: "#FF6B35", // Orange color for hard difficulty
+    backgroundColor: "#FF6B35",
   },
   hardButtonText: {
     color: "#FFFFFF",
     fontWeight: "bold",
-    fontSize: normalize(14),
+    fontSize: responsiveSize(14, 15, 16, 17),
     textAlign: "left",
   },
   impossibleButton: {
     flex: 1,
-    height: normalize(40),
+    height: responsiveSize(40, 45, 50, 55),
     backgroundColor: colors.accent.danger,
     borderRadius: normalize(10),
     paddingHorizontal: normalize(15),
@@ -325,17 +325,17 @@ export const collectionStyles = StyleSheet.create({
   impossibleButtonText: {
     color: colors.text.primary,
     fontWeight: "bold",
-    fontSize: normalize(14),
+    fontSize: responsiveSize(14, 15, 16, 17),
   },
   rewardIcons: {
     flexDirection: "row",
     alignItems: "center",
-    zIndex: 2, // Ensure icons stay above overlay
+    zIndex: 2,
   },
   rewardValueText: {
     color: colors.text.primary,
     fontWeight: "bold",
-    fontSize: normalize(12),
+    fontSize: responsiveSize(12, 13, 14, 15),
     marginRight: normalize(5),
   },
   disabledText: {

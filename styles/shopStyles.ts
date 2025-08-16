@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native"
-import { normalize } from "../utils/responsive"
+import { normalize, responsiveSize } from "../utils/responsive"
 import { colors } from "../theme/colors"
 import { spacing } from "../theme/spacing"
 
@@ -8,18 +8,17 @@ export const shopStyles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
-    paddingVertical: spacing.lg
+    paddingVertical: spacing.lg,
   },
   section: {
-    paddingHorizontal: spacing.lg,
+    paddingHorizontal: responsiveSize(16, 20, 24, 32),
     marginBottom: spacing.lg,
   },
-  sectionFinal:{
-    paddingHorizontal: spacing.lg,
-
+  sectionFinal: {
+    paddingHorizontal: responsiveSize(16, 20, 24, 32),
   },
   sectionTitle: {
-    fontSize: normalize(20),
+    fontSize: responsiveSize(20, 22, 24, 26),
     fontWeight: "bold",
     color: colors.text.primary,
     marginBottom: spacing.md,
@@ -28,15 +27,15 @@ export const shopStyles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    gap: normalize(12),
+    gap: responsiveSize(12, 14, 16, 18),
   },
 })
 
 export const getCoinsButtonStyles = StyleSheet.create({
   container: {
     backgroundColor: colors.surface.secondary,
-    borderRadius: normalize(25),
-    paddingVertical: normalize(20),
+    borderRadius: responsiveSize(25, 27, 30, 32),
+    paddingVertical: responsiveSize(20, 22, 24, 26),
     marginBottom: spacing.lg,
     shadowColor: "#000",
     shadowOffset: {
@@ -48,7 +47,7 @@ export const getCoinsButtonStyles = StyleSheet.create({
     elevation: 8,
   },
   text: {
-    fontSize: normalize(18),
+    fontSize: responsiveSize(18, 20, 22, 24),
     fontWeight: "bold",
     color: colors.text.primary,
   },
@@ -57,11 +56,11 @@ export const getCoinsButtonStyles = StyleSheet.create({
 export const coinPackageStyles = StyleSheet.create({
   container: {
     width: "48%",
-    height: normalize(220),
+    height: responsiveSize(220, 250, 280, 320),
     aspectRatio: 1,
     backgroundColor: colors.surface.secondary,
-    borderRadius: normalize(15),
-    padding: spacing.sm,
+    borderRadius: responsiveSize(15, 17, 20, 22),
+    padding: responsiveSize(12, 14, 16, 18),
     justifyContent: "space-between",
     alignItems: "center",
     borderWidth: normalize(2),
@@ -76,33 +75,33 @@ export const coinPackageStyles = StyleSheet.create({
     elevation: 5,
   },
   image: {
-    width: normalize(60),
-    height: normalize(60),
+    width: responsiveSize(60, 70, 80, 90),
+    height: responsiveSize(60, 70, 80, 90),
     borderRadius: normalize(10),
   },
   coinContainer: {
     flexDirection: "row",
     alignItems: "center",
     backgroundColor: colors.background.primary,
-    paddingHorizontal: normalize(12),
-    paddingVertical: normalize(6),
-    borderRadius: normalize(15),
+    paddingHorizontal: responsiveSize(12, 14, 16, 18),
+    paddingVertical: responsiveSize(6, 7, 8, 9),
+    borderRadius: responsiveSize(15, 16, 18, 20),
     gap: normalize(5),
   },
   coinAmount: {
     color: colors.text.primary,
-    fontSize: normalize(16),
+    fontSize: responsiveSize(16, 18, 20, 22),
     fontWeight: "bold",
   },
   priceContainer: {
     backgroundColor: colors.surface.tertiary,
-    paddingHorizontal: normalize(12),
-    paddingVertical: normalize(6),
+    paddingHorizontal: responsiveSize(12, 14, 16, 18),
+    paddingVertical: responsiveSize(6, 7, 8, 9),
     borderRadius: normalize(10),
   },
   price: {
     color: colors.text.primary,
-    fontSize: normalize(14),
+    fontSize: responsiveSize(14, 15, 16, 18),
     fontWeight: "bold",
   },
 })
@@ -110,9 +109,9 @@ export const coinPackageStyles = StyleSheet.create({
 export const vipPackageStyles = StyleSheet.create({
   container: {
     width: "100%",
-    height: normalize(120),
+    height: responsiveSize(120, 140, 160, 180),
     backgroundColor: colors.surface.secondary,
-    borderRadius: normalize(15),
+    borderRadius: responsiveSize(15, 17, 20, 22),
     overflow: "hidden",
     position: "relative",
     borderWidth: normalize(2),
@@ -138,7 +137,7 @@ export const vipPackageStyles = StyleSheet.create({
     alignItems: "center",
   },
   vipText: {
-    fontSize: normalize(32),
+    fontSize: responsiveSize(32, 36, 40, 44),
     fontWeight: "bold",
     color: colors.text.primary,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
@@ -147,16 +146,16 @@ export const vipPackageStyles = StyleSheet.create({
   },
   priceContainer: {
     position: "absolute",
-    bottom: normalize(10),
-    left: normalize(15),
+    bottom: responsiveSize(10, 12, 14, 16),
+    left: responsiveSize(15, 17, 20, 22),
     backgroundColor: colors.surface.tertiary,
-    paddingHorizontal: normalize(12),
-    paddingVertical: normalize(6),
+    paddingHorizontal: responsiveSize(12, 14, 16, 18),
+    paddingVertical: responsiveSize(6, 7, 8, 9),
     borderRadius: normalize(10),
   },
   price: {
     color: colors.text.primary,
-    fontSize: normalize(16),
+    fontSize: responsiveSize(16, 17, 18, 20),
     fontWeight: "bold",
   },
 })
