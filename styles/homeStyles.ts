@@ -136,7 +136,9 @@ export const leaderboardStyles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center", // Added horizontal centering
     marginBottom: normalize(5),
+    minHeight: normalize(24), // Added minimum height for consistent vertical alignment
   },
   text: {
     color: colors.text.secondary,

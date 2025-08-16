@@ -77,4 +77,4 @@ const AchievementScreen: React.FC = () => {
   )
 }
 
-export default AchievementScreen;
+export default AchievementScreen

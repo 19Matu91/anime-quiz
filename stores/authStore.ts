@@ -1,8 +1,7 @@
 import { create } from "zustand"
-// import { createJSONStorage } from 'zustand/middleware'
-import { persist, createJSONStorage } from 'expo-zustand-persist';
+import { persist, createJSONStorage } from "expo-zustand-persist"
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 export interface UserSettings {
   language: string
@@ -34,6 +33,7 @@ export interface User {
   username: string
   avatar: string
   email?: string
+  isGuest?: boolean
   stats: UserStats
   progress: UserProgress
   settings: UserSettings
@@ -46,10 +46,13 @@ interface AuthState {
 
   // Actions
   login: (user: User) => void
+  loginAsGuest: (username: string, avatar: string) => void
   logout: () => void
+  deleteAccount: () => void
   updateUsername: (username: string) => void
   updateAvatar: (avatar: string) => void
   updateSettings: (settings: Partial<UserSettings>) => void
+  updateUserSettings: (settings: Partial<UserSettings>) => void
   updateStats: (stats: Partial<UserStats>) => void
   updateProgress: (progress: Partial<UserProgress>) => void
 
@@ -92,7 +95,6 @@ const defaultUser: User = {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-
     (set, get) => ({
       // Initial state
       isAuthenticated: false, // Default to authenticated for demo
@@ -103,9 +105,26 @@ export const useAuthStore = create<AuthState>()(
         set({ isAuthenticated: true, user })
       },
 
+      loginAsGuest: (username: string, avatar: string) => {
+        const guestUser: User = {
+          ...defaultUser,
+          id: `guest_${Date.now()}`,
+          username,
+          avatar,
+          isGuest: true,
+        }
+        set({ isAuthenticated: true, user: guestUser })
+      },
+
       logout: () => {
-        console.log("logout")
+        console.log("")
         set({ isAuthenticated: false, user: null })
+      },
+
+      deleteAccount: () => {
+        set({ isAuthenticated: false, user: null })
+        // Here you would typically make an API call to delete the account from the server
+        console.log("Account deleted")
       },
 
       // User data updates
@@ -133,6 +152,11 @@ export const useAuthStore = create<AuthState>()(
             },
           })
         }
+      },
+
+      updateUserSettings: (newSettings: Partial<UserSettings>) => {
+        const { updateSettings } = get()
+        updateSettings(newSettings)
       },
 
       updateStats: (newStats: Partial<UserStats>) => {

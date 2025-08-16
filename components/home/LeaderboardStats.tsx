@@ -1,17 +1,34 @@
 import type React from "react"
-import { View, Text, Image } from "react-native"
+import { View, Text } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { normalize } from "@/utils/responsive"
 import { leaderboardStyles } from "@/styles/homeStyles"
+import { useAuthStore } from "@/stores/authStore"
 
-interface LeaderboardStatsProps {
-  globalRank: number
-  localRank: number
-  score: string
-  flagImage: string
+const languages = [
+  { code: "en", name: "English", flag: "🇺🇸" },
+  { code: "es", name: "Español", flag: "🇪🇸" },
+  { code: "ja", name: "日本語", flag: "🇯🇵" },
+  { code: "fr", name: "Français", flag: "🇫🇷" },
+  { code: "de", name: "Deutsch", flag: "🇩🇪" },
+  { code: "it", name: "Italiano", flag: "🇮🇹" },
+]
+
+const formatNumber = (num: number): string => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(3).replace(/\.?0+$/, "") + "M"
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(3).replace(/\.?0+$/, "") + "K"
+  }
+  return num.toString()
 }
 
-export const LeaderboardStats: React.FC<LeaderboardStatsProps> = ({ globalRank, localRank, score, flagImage }) => {
+export const LeaderboardStats: React.FC = () => {
+  const { user } = useAuthStore()
+
+  const userLanguage = languages.find((lang) => lang.code === user?.settings?.language) || languages[0]
+
   return (
     <View style={leaderboardStyles.container}>
       <View style={leaderboardStyles.item}>
@@ -19,17 +36,29 @@ export const LeaderboardStats: React.FC<LeaderboardStatsProps> = ({ globalRank, 
           <Ionicons name="earth" size={normalize(20)} color="#00E676" />
           <Text style={leaderboardStyles.text}>GLOBAL</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{globalRank.toLocaleString()}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.globalRank || 0)}</Text>
       </View>
 
       <View style={leaderboardStyles.separator} />
 
       <View style={leaderboardStyles.item}>
         <View style={leaderboardStyles.header}>
-          <Image source={{ uri: flagImage }} style={leaderboardStyles.flagIcon} />
+          <View
+            style={{
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              borderRadius: normalize(10),
+              padding: normalize(2),
+              justifyContent: "center",
+              alignItems: "center",
+              minWidth: normalize(20),
+              minHeight: normalize(20),
+            }}
+          >
+            <Text style={{ fontSize: normalize(16) }}>{userLanguage.flag}</Text>
+          </View>
           <Text style={leaderboardStyles.text}>LOCAL</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{localRank}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.localRank || 0)}</Text>
       </View>
 
       <View style={leaderboardStyles.separator} />
@@ -39,7 +68,7 @@ export const LeaderboardStats: React.FC<LeaderboardStatsProps> = ({ globalRank, 
           <Ionicons name="star" size={normalize(20)} color="#3498db" />
           <Text style={leaderboardStyles.text}>SCORE</Text>
         </View>
-        <Text style={leaderboardStyles.value}>{score}</Text>
+        <Text style={leaderboardStyles.value}>{formatNumber(user?.score || 0)}</Text>
       </View>
     </View>
   )

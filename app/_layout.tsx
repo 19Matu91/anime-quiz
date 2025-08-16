@@ -27,11 +27,13 @@ export default function RootLayout() {
     return null
   }
 
-  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth"
+  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth" || pathname === "/sign-up"
   const isProtectedRoute = !isAuthRoute && pathname !== "/"
 
   // Redirect unauthenticated users trying to access protected routes
-  if (!isAuthenticated && isProtectedRoute) {
+  if (!isAuthenticated && isProtectedRoute && !isAuthRoute) {
+    console.log("Redirecting to /auth")
+    console.log(pathname)
     return <Redirect href="/(auth)" />
   }
 

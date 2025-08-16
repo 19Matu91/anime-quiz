@@ -59,6 +59,8 @@ export const SettingsSlider: React.FC<SettingsSliderProps> = ({ label, value, on
           borderRadius: normalize(3),
           position: "relative",
           flex: 1,
+          borderWidth: 1,
+          borderColor: colors.text.secondary,
         }}
         {...panResponder.panHandlers}
         onLayout={(event) => {
@@ -69,7 +71,7 @@ export const SettingsSlider: React.FC<SettingsSliderProps> = ({ label, value, on
           style={{
             height: "100%",
             width: `${value}%`,
-            backgroundColor: colors.primary,
+            backgroundColor: colors.accent.gold,
             borderRadius: normalize(3),
           }}
         />
@@ -81,9 +83,11 @@ export const SettingsSlider: React.FC<SettingsSliderProps> = ({ label, value, on
             width: normalize(18),
             height: normalize(18),
             borderRadius: normalize(9),
-            backgroundColor: colors.text.primary,
+            backgroundColor: colors.accent.gold,
             marginLeft: normalize(-9),
             opacity: isDragging ? 0.8 : 1,
+            borderWidth: 2,
+            borderColor: colors.text.primary,
           }}
         />
       </View>

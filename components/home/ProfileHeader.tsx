@@ -11,35 +11,37 @@ import { EditableUsername } from "../profile/EditableUsername"
 import { BottomAlert } from "../common/BottomAlert"
 import { AvatarSelection } from "../profile/AvatarSelection"
 import { useAvatarStore } from "../../stores/avatarStore"
+import { useAuthStore } from "../../stores/authStore"
 import { colors } from "../../theme/colors"
 
 interface ProfileHeaderProps {
-  profileImage: string
-  username: string
-  rank: number
-  progress: number
-  maxProgress: number
-  score: number
   showEditables?: boolean
-  onUsernameChange?: (newUsername: string) => void
 }
 
-export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  profileImage,
-  username,
-  rank,
-  progress,
-  maxProgress,
-  score,
-  showEditables = false,
-  onUsernameChange,
-}) => {
+const formatNumber = (num: number): string => {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(3).replace(/\.?0+$/, "") + "M"
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(3).replace(/\.?0+$/, "") + "K"
+  }
+  return num.toString()
+}
+
+export const ProfileHeader: React.FC<ProfileHeaderProps> = ({ showEditables = false }) => {
   const [showAvatarSelection, setShowAvatarSelection] = useState(false)
   const [isEditingUsername, setIsEditingUsername] = useState(false)
-  const [currentUsername, setCurrentUsername] = useState(username)
 
+  const { user, updateUsername, updateAvatar } = useAuthStore()
   const { avatars, selectedAvatarId } = useAvatarStore()
   const selectedAvatar = avatars.find((avatar) => avatar.id === selectedAvatarId)
+
+  const username = user?.username || "Guest"
+  const profileImage = user?.avatar || "https://via.placeholder.com/80"
+  const rank = user?.progress.rank || 1
+  const progress = user?.progress.progress || 0
+  const maxProgress = user?.progress.maxProgress || 100
+  const score = user?.stats.score || 0
 
   const progressPercentage = (progress / maxProgress) * 100
 
@@ -56,9 +58,8 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   }
 
   const handleUsernameSave = (newUsername: string) => {
-    setCurrentUsername(newUsername)
+    updateUsername(newUsername)
     setIsEditingUsername(false)
-    onUsernameChange?.(newUsername)
   }
 
   const handleUsernameCancel = () => {
@@ -93,14 +94,14 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <View style={profileHeaderStyles.info}>
           {showEditables ? (
             <EditableUsername
-              username={currentUsername}
+              username={username}
               isEditing={isEditingUsername}
               onEdit={handleUsernameEdit}
               onSave={handleUsernameSave}
               onCancel={handleUsernameCancel}
             />
           ) : (
-            <Text style={profileHeaderStyles.name}>{currentUsername}</Text>
+            <Text style={profileHeaderStyles.name}>{username}</Text>
           )}
 
           <View style={profileHeaderStyles.progressContainer}>
@@ -112,7 +113,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               <View style={[profileHeaderStyles.progressBarFill, { width: `${progressPercentage}%` }]} />
             </View>
             <Text style={profileHeaderStyles.progressText}>
-              {progress}/{maxProgress}
+              {formatNumber(progress)}/{formatNumber(maxProgress)}
             </Text>
           </View>
         </View>
@@ -120,7 +121,7 @@ export const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <View style={profileHeaderStyles.scoreContainer}>
           <View style={profileHeaderStyles.scoreIcons}>
             <Ionicons name="cash-outline" size={normalize(24)} color="#FFD700" />
-            <Text style={profileHeaderStyles.scoreText}>{score.toLocaleString()}</Text>
+            <Text style={profileHeaderStyles.scoreText}>{formatNumber(score)}</Text>
           </View>
           <TouchableOpacity onPress={() => router.push("/shop")}>
             <Ionicons name="add-circle-outline" size={normalize(24)} color="#FFFFFF" />

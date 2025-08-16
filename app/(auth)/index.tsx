@@ -55,6 +55,7 @@ const SignInScreen: React.FC = () => {
   const handleGuestLogin = () => {
     const guestData = {
       id: `guest_${Date.now()}`,
+      isGuest: true,
       username: "Guest User",
       avatar: "https://i.imgur.com/oW1dGDI.jpeg",
       stats: {
