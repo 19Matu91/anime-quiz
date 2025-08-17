@@ -8,13 +8,14 @@ import { normalize } from "@/utils/responsive"
 interface InputProps extends TextInputProps {
   label?: string
   error?: string
+  editable?: boolean
 }
 
-export const Input: React.FC<InputProps> = ({ label, error, style, ...props }) => {
+export const Input: React.FC<InputProps> = ({ label, error, style, editable, ...props }) => {
   return (
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <TextInput style={[styles.input, style]} placeholderTextColor={colors.textPlaceholder} {...props} />
+      <TextInput style={[styles.input, style]} placeholderTextColor={colors.textPlaceholder} editable={editable} {...props} />
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   )

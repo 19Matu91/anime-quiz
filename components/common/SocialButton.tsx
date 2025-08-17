@@ -15,6 +15,7 @@ const socialConfig = {
   google: { icon: "google", color: colors.google, name: "Google" },
   facebook: { icon: "facebook-square", color: colors.facebook, name: "Facebook" },
   apple: { icon: "apple", color: colors.apple, name: "Apple" },
+  email: { icon: "envelope", color: colors.apple, name: "Email" },
 }
 
 export const SocialButton: React.FC<SocialButtonProps> = ({ provider, onPress }) => {

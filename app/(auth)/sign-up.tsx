@@ -5,7 +5,7 @@ import { useState } from "react"
 import { View, StatusBar, FlatList, useWindowDimensions, TouchableOpacity, Text } from "react-native"
 import { LinearGradient } from "expo-linear-gradient"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
-import { router } from "expo-router"
+import { router, useLocalSearchParams } from "expo-router"
 import { OtakuChallengeLogo } from "@/components/common/OtakuChallengeLogo"
 import { Input } from "@/components/common/Input"
 import { AvatarSelector } from "@/components/avatar/AvatarSelector"
@@ -22,7 +22,9 @@ const avatars = Array.from({ length: totalAvatars }, (_, i) => ({
 }))
 
 const SignUpScreen: React.FC = () => {
+  const { provider } = useLocalSearchParams();
   const [username, setUsername] = useState("MatutanoPoderoso")
+  const [email, setEmail] = useState(provider === "google" ? "email de google" : "")
   const [selectedAvatarId, setSelectedAvatarId] = useState(avatars[1].id)
 
   const { login } = useAuthStore()
@@ -89,6 +91,7 @@ const SignUpScreen: React.FC = () => {
           <OtakuChallengeLogo size="medium" />
         </View>
 
+        <Input label="Select email:" value={email} onChangeText={setEmail} placeholder="Enter your email" editable={provider !== "google"}/>
         <Input label="Select username:" value={username} onChangeText={setUsername} placeholder="Enter your username" />
 
         <View style={signUpStyles.inputGroup}>

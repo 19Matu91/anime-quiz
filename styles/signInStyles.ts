@@ -21,8 +21,7 @@ export const signInStyles = StyleSheet.create({
     marginBottom: spacing.xl,
   },
   bottomButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
     width: "90%",
     marginTop: spacing.lg,
   },
