@@ -70,7 +70,6 @@ const SignUpScreen: React.FC = () => {
     }
 
     login(newUser)
-    router.push("/(tabs)")
   }
 
   const renderAvatar = ({ item }: { item: (typeof avatars)[0] }) => (
