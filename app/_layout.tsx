@@ -32,7 +32,7 @@ export default function RootLayout() {
     }
   }, [])
 
-  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth"
+  const isAuthRoute = pathname.startsWith("/(auth)") || pathname === "/auth" || pathname === "/sign-up"
   const isProtectedRoute = !isAuthRoute && pathname !== "/"
 
   if (!loaded || !isReady) {
